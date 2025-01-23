@@ -1,28 +1,21 @@
 "use client";
-import rtlPlugin from "stylis-plugin-rtl";
 import { prefixer } from "stylis";
-import { createTheme, Theme } from "@mui/material/styles";
-import { CacheProvider } from "@emotion/react";
+import stylisRTLPlugin from "stylis-plugin-rtl";
 import createCache from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
 import { PropsWithChildren } from "react";
 import { CssBaseline, ThemeProvider as MuiThemeProvider } from "@mui/material";
-
-const theme = createTheme({
-  direction: "rtl",
-  typography: {
-    fontFamily: "Vazirmatn",
-  },
-});
+import Theme from "./Theme";
 
 const cacheRtl = createCache({
   key: "muirtl",
-  stylisPlugins: [prefixer, rtlPlugin],
+  stylisPlugins: [prefixer, stylisRTLPlugin],
 });
 
 const ThemeProvider = ({ children }: PropsWithChildren) => {
   return (
     <CacheProvider value={cacheRtl}>
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider theme={Theme}>
         <CssBaseline />
         {children}
       </MuiThemeProvider>
