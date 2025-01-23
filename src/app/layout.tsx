@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Vazirmatn } from "next/font/google";
+import ThemeProvider from "@/theme/ThemeProvider";
 import "./globals.css";
 
 const vazir = Vazirmatn({
-  variable: "--font-geist-sans",
+  variable: "--font-vazir-sans",
   subsets: ["latin", "arabic"],
 });
 
@@ -18,8 +19,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${vazir.variable}`}>{children}</body>
+    <html lang="fa" dir="rtl">
+      <ThemeProvider>
+        <body className={`${vazir.variable}`}>{children}</body>
+      </ThemeProvider>
     </html>
   );
 }
