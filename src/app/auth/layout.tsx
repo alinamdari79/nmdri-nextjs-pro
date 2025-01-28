@@ -7,7 +7,7 @@ export default function layout({
 }>) {
   return (
     <Box
-      sx={{ display: "flex", marginTop:"70px", alignItems: "center", justifyContent: "center" }}
+      sx={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop:"70px", marginBottom:"30px" }}
     >
       {children}
     </Box>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useActionState } from "react";
 import {
   Card,
   CardContent,
@@ -15,24 +15,31 @@ import {
   IconButton,
   FormControlLabel,
   Checkbox,
+  FormHelperText,
+  Box,
 } from "@mui/material";
 import Link from "next/link";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { signup } from "@/actions/signup";
 import Image from "next/image";
 import brandImage from "../../../../public/asstes/bg-login.jpg";
 
-export default function Login() {
+type Props = {};
+
+export default function Login({}: Props) {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const [state, action, pending] = useActionState(signup, undefined);
 
   return (
     <Card
       elevation={10}
       sx={{ display: "flex", width: "848px", flexDirection: "row" }}
     >
-      <CardContent sx={{ width: "424px" }}>
-        <form action="">
+      <CardContent sx={{ width: "424px", paddingY:"50px"}}>
+        <form action={action}>
           <Stack
             direction="row"
             justifyContent="space-between"
@@ -46,6 +53,8 @@ export default function Login() {
           </Stack>
           <Stack width="380px" gap={2} mt={2}>
             <TextField
+              error={!!state?.errors.email}
+              helperText={state?.errors.email}
               size="small"
               fullWidth
               name="email"
@@ -53,8 +62,12 @@ export default function Login() {
               label="رایانامه(ایمیل)"
             />
             <FormControl variant="outlined">
-              <InputLabel size="small">گذرواژه</InputLabel>
+              <InputLabel error={!!state?.errors.password} size="small">
+                گذرواژه
+              </InputLabel>
               <OutlinedInput
+                error={!!state?.errors.password}
+                name="password"
                 size="small"
                 type={showPassword ? "text" : "password"}
                 endAdornment={
@@ -73,8 +86,14 @@ export default function Login() {
                 }
                 label="Password"
               />
+              <FormHelperText error>
+                {state?.errors.password?.map((e) => (
+                  <Box component="span" display="block" key={e}>
+                    {e}
+                  </Box>
+                ))}
+              </FormHelperText>
             </FormControl>
-
             <Stack
               display={"flex"}
               direction="row"
@@ -90,12 +109,14 @@ export default function Login() {
                 گذر واژه خود را فراموش کرده اید ؟
               </MuiLink>
             </Stack>
-            <Button variant="contained">ثبت نام</Button>
+            <Button type="submit" disabled={pending} variant="contained">
+              ثبت نام
+            </Button>
           </Stack>
         </form>
       </CardContent>
       <Image
-        style={{ width: "424px", height: "400px" }}
+        style={{ width: "424px", height: "auto" }}
         src={brandImage}
         alt="SSS"
       />

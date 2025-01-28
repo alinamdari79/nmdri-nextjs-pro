@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useActionState } from "react";
 import {
   Card,
   CardContent,
@@ -13,12 +13,19 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
+  FormHelperText,
+  Box,
 } from "@mui/material";
 import Link from "next/link";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { signup } from "@/actions/signup";
+import Image from "next/image";
+import brandImage from "../../../../public/asstes/bg-signup.jpg";
 
-export default function SignUp() {
+type Props = {};
+
+export default function SignUp({}: Props) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
@@ -26,10 +33,15 @@ export default function SignUp() {
   const handleClickShowConfirmPassword = () =>
     setShowConfirmPassword((show) => !show);
 
+  const [state, action, pending] = useActionState(signup, undefined);
+
   return (
-    <Card elevation={10}>
-      <CardContent sx={{ width: "424px" }}>
-        <form action="">
+    <Card
+      elevation={10}
+      sx={{ display: "flex", width: "848px", flexDirection: "row" }}
+    >
+      <CardContent sx={{ width: "424px", paddingY: "30px" }}>
+        <form action={action}>
           <Stack
             direction="row"
             justifyContent="space-between"
@@ -45,6 +57,8 @@ export default function SignUp() {
             <Stack mt={2} direction="row" justifyContent="space-between">
               <TextField
                 sx={{ width: "185px" }}
+                error={!!state?.errors.firstName}
+                helperText={state?.errors.firstName}
                 size="small"
                 name="firstName"
                 type="text"
@@ -54,6 +68,8 @@ export default function SignUp() {
               />
               <TextField
                 sx={{ width: "185px" }}
+                error={!!state?.errors.lastName}
+                helperText={state?.errors.lastName}
                 size="small"
                 name="lastName"
                 type="text"
@@ -63,6 +79,8 @@ export default function SignUp() {
               />
             </Stack>
             <TextField
+              error={!!state?.errors.email}
+              helperText={state?.errors.email}
               size="small"
               fullWidth
               name="email"
@@ -70,8 +88,12 @@ export default function SignUp() {
               label="رایانامه(ایمیل)"
             />
             <FormControl variant="outlined">
-              <InputLabel size="small">گذرواژه</InputLabel>
+              <InputLabel error={!!state?.errors.password} size="small">
+                گذرواژه
+              </InputLabel>
               <OutlinedInput
+                error={!!state?.errors.password}
+                name="password"
                 size="small"
                 type={showPassword ? "text" : "password"}
                 endAdornment={
@@ -90,10 +112,21 @@ export default function SignUp() {
                 }
                 label="Password"
               />
+              <FormHelperText error>
+                {state?.errors.password?.map((e) => (
+                  <Box component="span" display="block" key={e}>
+                    {e}
+                  </Box>
+                ))}
+              </FormHelperText>
             </FormControl>
             <FormControl variant="outlined">
-              <InputLabel size="small">تکرار گذرواژه</InputLabel>
+              <InputLabel error={!!state?.errors.password} size="small">
+                تکرار گذرواژه
+              </InputLabel>
               <OutlinedInput
+                error={!!state?.errors.confirmPassword}
+                name="confirmPassword"
                 size="small"
                 type={showConfirmPassword ? "text" : "password"}
                 endAdornment={
@@ -112,6 +145,13 @@ export default function SignUp() {
                 }
                 label="Password"
               />
+              <FormHelperText error>
+                {state?.errors.confirmPassword?.map((e) => (
+                  <Box component="span" display="block" key={e}>
+                    {e}
+                  </Box>
+                ))}
+              </FormHelperText>
             </FormControl>
             <Typography variant="caption">
               با ثبت نام در این سرویس شما با تمامی{" "}
@@ -120,10 +160,20 @@ export default function SignUp() {
               </MuiLink>{" "}
               موافقت خود را اعلام می نمایید
             </Typography>
-            <Button variant="contained">ثبت نام</Button>
+            <Button type="submit" disabled={pending} variant="contained">
+              ثبت نام
+            </Button>
           </Stack>
         </form>
       </CardContent>
+      <Image
+        style={{
+          width: "424px",
+          height: "auto",
+        }}
+        src={brandImage}
+        alt="SSS"
+      />
     </Card>
   );
 }
