@@ -1,4 +1,4 @@
-import { colors, createTheme } from "@mui/material";
+import { createTheme } from "@mui/material";
 
 const Theme = createTheme({
   direction: "rtl",
@@ -9,6 +9,9 @@ const Theme = createTheme({
     background: {
       default:"#EEEEEE"
     },
+    warning: {
+      main:"#ff5722"
+    }
   },
 });
 
