@@ -72,9 +72,9 @@ function LogInForm() {
             }
             label="Password"
           />
-          <FormHelperText error>
+          <FormHelperText sx={{display:"flex", flexWrap:"wrap" }} error>
             {state?.errors?.password?.map((e: string) => (
-              <Box component="span" display="block" key={e}>
+              <Box component="span" width="170px" key={e}>
                 {e}
               </Box>
             ))}
