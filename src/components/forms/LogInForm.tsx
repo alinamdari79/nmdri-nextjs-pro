@@ -19,13 +19,13 @@ import {
 import Link from "next/link";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { signup } from "@/actions/signup";
+import { login } from "@/actions/login";
 
 function LogInForm() {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const [state, action, pending] = useActionState(signup, undefined);
+  const [state, action, pending] = useActionState(login, undefined);
   return (
     <form action={action}>
       <Stack

@@ -121,7 +121,7 @@ export default function DashboardHeader() {
 
   return (
     <>
-      <AppBar sx={{ paddingY:"12px", backgroundColor: "#16215e" }} position="fixed" open={isOpen}>
+      <AppBar sx={{ paddingY:"12px", backgroundColor: "#1B6392" }} position="fixed" open={isOpen}>
         <Toolbar>
           <IconButton
             size="large"
@@ -137,7 +137,7 @@ export default function DashboardHeader() {
             Next + Material
           </Typography>
           <Search
-            sx={{ ml: "15px", backgroundColor: "#ccd3ff", color: "#1d1d1d" }}
+            sx={{ ml: "15px", backgroundColor: "#d7dcfe", color: "#1d1d1d" }}
           >
             <SearchIconWrapper>
               <SearchIcon />
